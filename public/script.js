@@ -58,3 +58,20 @@ form.addEventListener("submit", async (event) => {
     loader.classList.add("hidden");
   }
 });
+
+const themeToggle = document.getElementById("themeToggle");
+const body = document.body;
+
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "light") {
+  body.classList.add("light-theme");
+  themeToggle.textContent = "☀️";
+}
+
+themeToggle.addEventListener("click", () => {
+  body.classList.toggle("light-theme");
+
+  const isLight = body.classList.contains("light-theme");
+  themeToggle.textContent = isLight ? "☀️" : "🌙";
+  localStorage.setItem("theme", isLight ? "light" : "dark");
+});

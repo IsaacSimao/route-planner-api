@@ -1,24 +1,45 @@
-import { calculateRouteDetails } from "../services/routeService.js";
+import { geocodeAddress } from "../services/geocodingService.js";
+import { calculateRouteOSRM } from "../services/routingService.js";
 
-export function calculateRoute(req, res) {
+export async function calculateRoute(req, res) {
   try {
-    const { departureTime, distanceKm, averageSpeedKmH } = req.body;
+    const { origin, destination, transport } = req.body;
 
-    if (!departureTime || !distanceKm || !averageSpeedKmH) {
+    if (!origin || !destination || !transport) {
       return res.status(400).json({
-        error: "departureTime, distanceKm and averageSpeedKmH are required",
+        error: "Origem, destino e transporte são obrigatórios",
       });
     }
 
-    const result = calculateRouteDetails({
-      departureTime,
-      distanceKm,
-      averageSpeedKmH,
+    const originData = await geocodeAddress(origin);
+    const destinationData = await geocodeAddress(destination);
+
+    const routeData = await calculateRouteOSRM({
+      origin: {
+        lat: originData.latitude,
+        lon: originData.longitude,
+      },
+      destination: {
+        lat: destinationData.latitude,
+        lon: destinationData.longitude,
+      },
+      transport,
     });
 
-    return res.json(result);
+    const now = new Date();
+    const arrivalTime = new Date(now.getTime() + routeData.durationMin * 60000);
+
+    return res.json({
+      origin: originData.displayName,
+      destination: destinationData.displayName,
+      transport,
+      distanceKm: routeData.distanceKm,
+      durationMin: routeData.durationMin,
+      departureTime: now.toISOString(),
+      estimatedArrival: arrivalTime.toISOString(),
+    });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       error: error.message,
     });
   }

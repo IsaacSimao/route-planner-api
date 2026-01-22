@@ -7,22 +7,42 @@
   </head>
   <body>
     <div class="container">
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+        🌙
+      </button>
+
       <h1>Planejador de Rotas</h1>
 
       <form id="routeForm">
         <label>
-          Horário de saída
-          <input type="time" id="departureTime" required />
+          Origem
+          <input
+            type="text"
+            id="origin"
+            placeholder="Ex: Av. Paulista, 1000 - São Paulo"
+            required
+          />
         </label>
 
         <label>
-          Distância (km)
-          <input type="number" id="distanceKm" min="1" required />
+          Destino
+          <input
+            type="text"
+            id="destination"
+            placeholder="Ex: Rua Vergueiro, 500 - São Paulo"
+            required
+          />
         </label>
 
         <label>
-          Velocidade média (km/h)
-          <input type="number" id="averageSpeedKmH" min="1" required />
+          Forma de locomoção
+          <select id="transport" required>
+            <option value="car">🚗 Carro</option>
+            <option value="motorcycle">🏍️ Moto</option>
+            <option value="bicycle">🚲 Bicicleta</option>
+            <option value="walk">🚶 A pé</option>
+            <option value="bus">🚌 Ônibus</option>
+          </select>
         </label>
 
         <button type="submit" id="submitBtn">

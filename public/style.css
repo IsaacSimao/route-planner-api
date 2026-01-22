@@ -1,18 +1,47 @@
+/* ==============================
+   THEME VARIABLES
+============================== */
+
 :root {
   --bg-color: #0b0e14;
   --card-bg: #121826;
+
   --primary: #7c5cff;
   --primary-hover: #6a4ff5;
+  --accent: #60a5fa;
+
   --text-main: #e5e7eb;
   --text-muted: #9ca3af;
+
+  --input-bg: rgba(255, 255, 255, 0.04);
+  --input-border: rgba(255, 255, 255, 0.12);
+
   --border-soft: rgba(255, 255, 255, 0.08);
+  --danger: #ff6b6b;
 }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-family: "Inter", system-ui, sans-serif;
+/* Light theme */
+.light-theme {
+  --bg-color: #f2f4f7;
+  --card-bg: #ffffff;
+
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --accent: #2563eb;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+
+  --input-bg: #ffffff;
+  --input-border: #e5e7eb;
+
+  --border-soft: rgba(0, 0, 0, 0.08);
+  --danger: #dc2626;
 }
+
+/* ==============================
+   RESET / BASE
+============================== */
 
 * {
   box-sizing: border-box;
@@ -28,78 +57,132 @@ body {
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #1b1f2a 0%, #0b0d12 60%);
-  color: #e5e7eb;
+  background-color: var(--bg-color);
+  color: var(--text-main);
   display: flex;
   justify-content: center;
   align-items: center;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
+
+/* ==============================
+   THEME TOGGLE
+============================== */
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  color: var(--text-main);
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* ==============================
+   CONTAINER
+============================== */
 
 .container {
   width: 100%;
   max-width: 420px;
-  background: linear-gradient(
-    180deg,
-    rgba(30, 34, 50, 0.85),
-    rgba(16, 18, 27, 0.95)
-  );
-  backdrop-filter: blur(12px);
+  background-color: var(--card-bg);
   border-radius: 16px;
   padding: 28px;
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
+
+/* ==============================
+   TITLE
+============================== */
 
 h1 {
   text-align: center;
   font-size: 1.6rem;
   margin-bottom: 24px;
-  background: linear-gradient(90deg, #60a5fa, #a78bfa);
+  background: linear-gradient(90deg, var(--accent), var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-form label {
-  display: block;
-  margin-bottom: 18px;
-  font-size: 0.85rem;
-  color: #9ca3af;
+/* ==============================
+   FORM
+============================== */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
+
+form label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==============================
+   INPUTS
+============================== */
 
 input {
   width: 100%;
   margin-top: 6px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  color: #f9fafb;
-  outline: none;
-  transition: all 0.2s ease;
+  padding: 12px 14px;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+input::placeholder {
+  color: var(--text-muted);
 }
 
 input:focus {
-  border-color: #60a5fa;
-  background: rgba(255, 255, 255, 0.06);
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
+/* ==============================
+   BUTTON
+============================== */
+
 button {
-  background: linear-gradient(135deg, var(--primary), #4f46e5);
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px 18px;
   color: white;
   font-weight: 600;
   cursor: pointer;
   transition:
     transform 0.15s ease,
-    box-shadow 0.15s ease;
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(124, 92, 255, 0.35);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 
 button:active {
@@ -110,6 +193,10 @@ button.loading {
   pointer-events: none;
   opacity: 0.85;
 }
+
+/* ==============================
+   BUTTON LOADER
+============================== */
 
 .loader {
   width: 18px;
@@ -122,17 +209,8 @@ button.loading {
   vertical-align: middle;
 }
 
-#result {
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
-}
-
-#result.show {
-  opacity: 1;
-  transform: translateY(0);
+.btn-text {
+  display: inline-block;
 }
 
 @keyframes spin {
@@ -141,29 +219,58 @@ button.loading {
   }
 }
 
-.btn-text {
-  display: inline-block;
-}
+/* ==============================
+   RESULT CARD + ANIMATION
+============================== */
 
-.hidden {
-  display: none;
-}
-
-/* Card de resultado */
 #result {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+
   background-color: var(--card-bg);
   border: 1px solid var(--border-soft);
   border-radius: 14px;
   padding: 16px 18px;
   margin-top: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  line-height: 1.6;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Texto interno */
+#result.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 #result strong {
   color: var(--primary);
 }
 
 #result span {
-  color: #ff6b6b;
+  color: var(--danger);
+}
+
+/* ==============================
+   UTILITIES
+============================== */
+
+.hidden {
+  display: none;
+}
+
+/* ==============================
+   DESKTOP ADJUSTMENTS
+============================== */
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 520px;
+  }
+
+  button {
+    width: auto;
+    align-self: flex-start;
+  }
 }

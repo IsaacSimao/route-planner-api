@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Planejador de Rotas</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Planejador de Rotas</h1>
+
+      <form id="routeForm">
+        <label>
+          Horário de saída
+          <input type="time" id="departureTime" required />
+        </label>
+
+        <label>
+          Distância (km)
+          <input type="number" id="distanceKm" min="1" required />
+        </label>
+
+        <label>
+          Velocidade média (km/h)
+          <input type="number" id="averageSpeedKmH" min="1" required />
+        </label>
+
+        <button type="submit">Calcular rota</button>
+      </form>
+
+      <div id="result" class="hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

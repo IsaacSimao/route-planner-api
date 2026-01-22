@@ -1,5 +1,8 @@
 const form = document.getElementById("routeForm");
 const resultDiv = document.getElementById("result");
+const submitBtn = document.getElementById("submitBtn");
+const btnText = submitBtn.querySelector(".btn-text");
+const loader = submitBtn.querySelector(".loader");
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -10,8 +13,13 @@ form.addEventListener("submit", async (event) => {
     document.getElementById("averageSpeedKmH").value,
   );
 
+  resultDiv.classList.remove("show");
   resultDiv.classList.add("hidden");
   resultDiv.innerHTML = "";
+
+  submitBtn.classList.add("loading");
+  btnText.textContent = "Calculando...";
+  loader.classList.remove("hidden");
 
   try {
     const response = await fetch("/api/routes/calculate", {
@@ -37,8 +45,16 @@ form.addEventListener("submit", async (event) => {
       <strong>Horário de chegada:</strong> ${data.arrivalTime}
     `;
     resultDiv.classList.remove("hidden");
+
+    setTimeout(() => {
+      resultDiv.classList.add("show");
+    }, 10);
   } catch (error) {
-    resultDiv.innerHTML = `<span style="color:red;">${error.message}</span>`;
+    resultDiv.innerHTML = `<span>${error.message}</span>`;
     resultDiv.classList.remove("hidden");
+  } finally {
+    submitBtn.classList.remove("loading");
+    btnText.textContent = "Calcular rota";
+    loader.classList.add("hidden");
   }
 });
